@@ -1,0 +1,123 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff9f2; /* Light peach background */
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background: linear-gradient(135deg, #ff8c00, #ffa500); /* Orange gradient */
+    color: white;
+    padding: 2em 1em;
+    text-align: center;
+    border-bottom: 5px solid #ff7f50; /* Coral border */
+}
+
+header h1 {
+    font-family: 'Pacifico', cursive;
+    margin: 0;
+    font-size: 3em;
+    font-weight: normal;
+}
+
+header h1 .logo-fruit {
+    font-size: 0.8em;
+    vertical-align: middle;
+}
+
+header p {
+    font-size: 1.2em;
+    margin-top: 0.5em;
+}
+
+main {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+main h2 {
+    color: #d2691e; /* Chocolate/Brown - like a pie crust */
+    text-align: center;
+    margin-bottom: 1.5em;
+    font-size: 2em;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+}
+
+tr:nth-child(even) {
+    background-color: #fcf0e4; /* Lighter peach for alternate rows */
+}
+
+th, td {
+    border: 1px solid #f0e68c; /* Khaki - subtle lines */
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background-color: #ffcc80; /* Lighter orange for header */
+    color: #5d4037; /* Brown text for header */
+    font-weight: 600;
+}
+
+.status-hiring {
+    color: #28a745; /* Green */
+    font-weight: bold;
+}
+
+.status-closed {
+    color: #dc3545; /* Red */
+    font-weight: bold;
+}
+
+a {
+    color: #ff8c00; /* Dark Orange */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #e67e00;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5em;
+    background-color: #5d4037; /* Brown like pie crust */
+    color: #fff0e1; /* Creamy text */
+    margin-top: 30px;
+    font-size: 0.9em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.2em;
+    }
+    header p {
+        font-size: 1em;
+    }
+    th, td {
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+    main h2 {
+        font-size: 1.8em;
+    }
+} 

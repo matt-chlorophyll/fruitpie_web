@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Pie Job Board</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1><span class="logo-fruit">🍇</span> Fruit Pie Job Board <span class="logo-fruit">🥧</span></h1>
+        <p>Your freshest source for exciting job opportunities!</p>
+    </header>
+
+    <main>
+        <h2>Current Openings</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date Posted</th>
+                        <th>Status</th>
+                        <th>Job Title</th>
+                        <th>Company</th>
+                        <th>Description</th>
+                        <th>Requirements</th>
+                        <th>Location</th>
+                        <th>Salary Range</th>
+                        <th>Contact</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                        <td>{{ job.posted_date.strftime('%Y-%m-%d') }}</td>
+                        <td class="status-{{ job.status.lower() }}">{{ job.status }}</td>
+                        <td>{{ job.title }}</td>
+                        <td>{{ job.company }}</td>
+                        <td>{{ job.description }}</td>
+                        <td>{{ job.requirements }}</td>
+                        <td>{{ job.location }}</td>
+                        <td>{{ job.salary if job.salary else 'N/A' }}</td>
+                        <td><a href="mailto:{{ job.contact }}">{{ job.contact }}</a></td>
+                        <td>{{ job.notes if job.notes else '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Fruit Pie Group. All rights reserved. Made with <span style="color: #ff7b7b;">&hearts;</span></p>
+    </footer>
+</body>
+</html> 
