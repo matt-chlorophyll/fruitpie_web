@@ -8,14 +8,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
 </head>
 <body>
+    <nav class="top-nav">
+        <div class="user-actions">
+            <span id="user-info" style="display:none;">Logged in as: <strong id="username-display"></strong></span>
+            <button id="login-btn" class="nav-button">Login</button>
+            <button id="register-btn" class="nav-button">Register</button>
+            <button id="logout-btn" class="nav-button" style="display:none;">Logout</button>
+        </div>
+    </nav>
+
     <header>
         <h1><span class="logo-fruit">🍇</span> Fruit Pie Job Board <span class="logo-fruit">🥧</span></h1>
         <p>Your freshest source for exciting job opportunities!</p>
     </header>
 
     <main>
-        <h2>Current Openings</h2>
-        <div class="table-container">
+        <div class="main-controls">
+            <h2>Current Openings</h2>
+            <button id="post-job-btn" class="action-button" style="display:none;">Post New Job</button>
+        </div>
+        
+        <div id="job-board-content" class="table-container">
+            <!-- Table will be blurred if not logged in -->
             <table>
                 <thead>
                     <tr>
@@ -32,27 +46,90 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for job in jobs %}
-                    <tr>
-                        <td>{{ job.posted_date.strftime('%Y-%m-%d') }}</td>
-                        <td class="status-{{ job.status.lower() }}">{{ job.status }}</td>
-                        <td>{{ job.title }}</td>
-                        <td>{{ job.company }}</td>
-                        <td>{{ job.description }}</td>
-                        <td>{{ job.requirements }}</td>
-                        <td>{{ job.location }}</td>
-                        <td>{{ job.salary if job.salary else 'N/A' }}</td>
-                        <td><a href="mailto:{{ job.contact }}">{{ job.contact }}</a></td>
-                        <td>{{ job.notes if job.notes else '-' }}</td>
-                    </tr>
-                    {% endfor %}
+                    {% if jobs %}
+                        {% for job in jobs %}
+                        <tr>
+                            <td>{{ job.posted_date.strftime('%Y-%m-%d') }}</td>
+                            <td class="status-{{ job.status.lower() }}">{{ job.status }}</td>
+                            <td>{{ job.title }}</td>
+                            <td>{{ job.company }}</td>
+                            <td>{{ job.description }}</td>
+                            <td>{{ job.requirements }}</td>
+                            <td>{{ job.location }}</td>
+                            <td>{{ job.salary if job.salary else 'N/A' }}</td>
+                            <td><a href="mailto:{{ job.contact }}">{{ job.contact }}</a></td>
+                            <td>{{ job.notes if job.notes else '-' }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="10">No job posts available at the moment.</td></tr>
+                    {% endif %}
                 </tbody>
             </table>
         </div>
+        <p id="login-prompt" style="text-align:center; display:none; margin-top:20px; font-size:1.1em;">Please <a href="#" id="prompt-login-link">login</a> or <a href="#" id="prompt-register-link">register</a> to view job details.</p>
     </main>
 
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" data-modal="login-modal">&times;</span>
+            <h3>Login</h3>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-username">Username:</label>
+                    <input type="text" id="login-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <button type="submit" class="modal-button">Login</button>
+                <p id="login-error" class="error-message"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" data-modal="register-modal">&times;</span>
+            <h3>Register New Account</h3>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Username:</label>
+                    <input type="text" id="register-username" name="username" required minlength="3">
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email:</label>
+                    <input type="email" id="register-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password (min 8 chars):</label>
+                    <input type="password" id="register-password" name="password" required minlength="8">
+                </div>
+                <div class="form-group">
+                    <label>I want to:</label>
+                    <div>
+                        <input type="checkbox" id="is_seeker" name="is_seeker" value="true" checked>
+                        <label for="is_seeker" class="checkbox-label">Look for jobs (Seeker)</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="is_poster" name="is_poster" value="true">
+                        <label for="is_poster" class="checkbox-label">Post jobs (Poster)</label>
+                    </div>
+                </div>
+                <button type="submit" class="modal-button">Register</button>
+                <p id="register-error" class="error-message"></p>
+                <p id="register-success" class="success-message"></p>
+            </form>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2023 Fruit Pie Group. All rights reserved. Made with <span style="color: #ff7b7b;">&hearts;</span></p>
+        <p>&copy; {{ current_year }} Fruit Pie Group. All rights reserved. Made with <span style="color: #ff7b7b;">&hearts;</span></p>
     </footer>
+
+    <script src="/static/app.js"></script>
 </body>
 </html> 

@@ -5,6 +5,38 @@ body {
     background-color: #fff9f2; /* Light peach background */
     color: #333;
     line-height: 1.6;
+    position: relative; /* For modal positioning */
+}
+
+/* Navigation */
+.top-nav {
+    background-color: #5d4037; /* Brown like pie crust */
+    padding: 0.5em 1em;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.user-actions span {
+    color: #fff0e1;
+    margin-right: 15px;
+}
+
+.nav-button, .action-button, .modal-button {
+    background-color: #ff8c00; /* Dark Orange */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9em;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-button:hover, .action-button:hover, .modal-button:hover {
+    background-color: #e67e00; /* Darker Orange */
 }
 
 header {
@@ -41,11 +73,24 @@ main {
     border-radius: 10px;
 }
 
+.main-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5em;
+}
+
 main h2 {
     color: #d2691e; /* Chocolate/Brown - like a pie crust */
-    text-align: center;
-    margin-bottom: 1.5em;
+    /* text-align: center; */ /* Adjusted for flex layout */
+    margin-bottom: 0; /* Adjusted for flex layout */
     font-size: 2em;
+}
+
+#job-board-content.blurred {
+    filter: blur(5px);
+    pointer-events: none; /* Prevents interaction with blurred content */
+    opacity: 0.6;
 }
 
 .table-container {
@@ -105,6 +150,93 @@ footer {
     font-size: 0.9em;
 }
 
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity (backdrop) */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 25px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal h3 {
+    margin-top: 0;
+    color: #d2691e;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-group .checkbox-label {
+    font-weight: normal;
+    margin-left: 5px;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.success-message {
+    color: green;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     header h1 {
@@ -117,7 +249,20 @@ footer {
         padding: 8px 10px;
         font-size: 0.85em;
     }
+    .main-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
     main h2 {
         font-size: 1.8em;
+        margin-bottom: 0.5em; /* Add some space when stacked */
+    }
+    .action-button {
+        align-self: flex-start; /* Or center, or flex-end */
+        margin-top: 10px;
+    }
+    .modal-content {
+        margin: 20% auto;
+        width: 90%;
     }
 } 
