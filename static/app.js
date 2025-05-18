@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerModal = document.getElementById('register-modal');
     const closeButtons = document.querySelectorAll('.close-btn');
 
+    // Get modal content areas to prevent click propagation
+    const loginModalContent = loginModal.querySelector('.modal-content');
+    const registerModalContent = registerModal.querySelector('.modal-content');
+
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
 
@@ -48,6 +52,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target === loginModal) closeModal(loginModal);
         if (event.target === registerModal) closeModal(registerModal);
     });
+
+    // Prevent clicks inside modal content from closing the modal via window listener
+    if (loginModalContent) {
+        loginModalContent.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+    }
+    if (registerModalContent) {
+        registerModalContent.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+    }
 
     // --- Token Management ---
     function saveToken(token) {

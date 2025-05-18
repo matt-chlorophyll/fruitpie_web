@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
-from datetime import date, timedelta, datetime
+from datetime import date, timedelta, datetime, timezone
 import os # For generating a secret key if not set
 
 # Security imports
@@ -126,9 +126,9 @@ def get_password_hash(password):
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expire = datetime.now(timezone.utc) + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES) # Use configured expiration
+        expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES) # Use configured expiration
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
@@ -259,7 +259,7 @@ async def read_root(request: Request, current_user: Optional[User] = Depends(get
             "is_seeker": current_user.is_seeker
         }
     
-    current_year = datetime.utcnow().year # Get current year
+    current_year = datetime.now(timezone.utc).year # Get current year
 
     return templates.TemplateResponse("index.html", {
         "request": request,
