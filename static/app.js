@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     promptLoginLink.addEventListener('click', (e) => { e.preventDefault(); openModal(loginModal); });
     promptRegisterLink.addEventListener('click', (e) => { e.preventDefault(); openModal(registerModal); });
 
-
     closeButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             closeModal(loginModal);
@@ -48,22 +47,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    window.addEventListener('click', (event) => {
-        if (event.target === loginModal) closeModal(loginModal);
-        if (event.target === registerModal) closeModal(registerModal);
-    });
+    // We will handle click-outside-to-close with a document mousedown listener below
+    // Remove the direct mousedown listeners on modal backdrops from the previous attempt
 
-    // Prevent clicks inside modal content from closing the modal via window listener
+    // Prevent clicks/mousedowns that start inside modal content from propagating to document listener
     if (loginModalContent) {
-        loginModalContent.addEventListener('click', (event) => {
+        loginModalContent.addEventListener('mousedown', (event) => {
+            console.log('Mousedown inside login modal content. Target:', event.target);
             event.stopPropagation();
+            console.log('Propagation stopped for login modal content mousedown.');
         });
     }
     if (registerModalContent) {
-        registerModalContent.addEventListener('click', (event) => {
+        registerModalContent.addEventListener('mousedown', (event) => {
+            console.log('Mousedown inside register modal content. Target:', event.target);
             event.stopPropagation();
+            console.log('Propagation stopped for register modal content mousedown.');
         });
     }
+
+    // Close modal if user mousedowns anywhere outside the modal content area
+    document.addEventListener('mousedown', (event) => {
+        console.log('Document mousedown. Target:', event.target);
+        // Check for login modal
+        if (loginModal.style.display === 'block') { // If modal is open
+            console.log('Login modal is open. Checking if click was outside content.');
+            if (loginModalContent && !loginModalContent.contains(event.target)) {
+                console.log('Mousedown was outside login modal content. Closing login modal.');
+                closeModal(loginModal);
+            } else {
+                console.log('Mousedown was inside login modal content or on content itself. Not closing.');
+            }
+        }
+
+        // Check for register modal
+        if (registerModal.style.display === 'block') { // If modal is open
+            console.log('Register modal is open. Checking if click was outside content.');
+            if (registerModalContent && !registerModalContent.contains(event.target)) {
+                console.log('Mousedown was outside register modal content. Closing register modal.');
+                closeModal(registerModal);
+            } else {
+                console.log('Mousedown was inside register modal content or on content itself. Not closing.');
+            }
+        }
+    });
 
     // --- Token Management ---
     function saveToken(token) {
